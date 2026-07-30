@@ -1,86 +1,121 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer base {
-  .markdown-content h1 {
-    font-size: 2em;
-    font-weight: bold;
-    margin: 0.67em 0;
+  :root {
+    --background: #0b0f19;
+    --foreground: #f3f4f6;
   }
-  .markdown-content h2 {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin: 0.83em 0;
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
   }
-  .markdown-content h3 {
-    font-size: 1.17em;
-    font-weight: bold;
-    margin: 1em 0;
-  }
-  .markdown-content h4 {
-    font-size: 1em;
-    font-weight: bold;
-    margin: 1.33em 0;
-  }
-  .markdown-content h5 {
-    font-size: 0.83em;
-    font-weight: bold;
-    margin: 1.67em 0;
-  }
-  .markdown-content h6 {
-    font-size: 0.67em;
-    font-weight: bold;
-    margin: 2.33em 0;
-  }
-  .markdown-content p {
-    margin: 1em 0;
-  }
-  .markdown-content ul {
-    list-style-type: disc;
-    padding-left: 2em;
-    margin: 1em 0;
-  }
-  .markdown-content ol {
-    list-style-type: decimal;
-    padding-left: 2em;
-    margin: 1em 0;
-  }
-  .markdown-content li {
-    margin: 0.25em 0;
-  }
-  .markdown-content strong {
-    font-weight: bold;
-  }
-  .markdown-content em {
-    font-style: italic;
-  }
-  .markdown-content hr {
-    border: 0;
-    border-top: 1px solid #e5e7eb;
-    margin: 2em 0;
-  }
+}
+
+/* Custom Glassmorphism & Micro-animations */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+.glass-input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f3f4f6;
+  transition: all 0.2s ease-in-out;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  background: rgba(15, 23, 42, 0.85);
+}
+
+/* Pulse Glow Effects */
+.glow-blue {
+  box-shadow: 0 0 50px -10px rgba(59, 130, 246, 0.3);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 50px -10px rgba(16, 185, 129, 0.3);
+}
+
+.glow-indigo {
+  box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}
+
+/* Markdown Custom Content */
+.markdown-content h1, 
+.markdown-content h2, 
+.markdown-content h3 {
+  color: #f3f4f6;
+  font-weight: 700;
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-content h3 {
+  font-size: 1.2em;
+  color: #60a5fa;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.4em;
+}
+
+.markdown-content p {
+  margin-bottom: 0.75em;
+  line-height: 1.6;
+  color: #e5e7eb;
+}
+
+.markdown-content ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.markdown-content li {
+  margin-bottom: 0.35em;
+  color: #d1d5db;
+}
+
+.markdown-content strong {
+  color: #93c5fd;
 }
