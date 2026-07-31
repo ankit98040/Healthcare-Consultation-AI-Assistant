@@ -114,20 +114,26 @@ def health_check():
 # Serve static Next.js frontend files
 static_path = Path("static")
 if static_path.exists():
-    @app.get("/product")
+    @app.api_route("/product", methods=["GET", "HEAD"])
+    @app.api_route("/product.html", methods=["GET", "HEAD"])
     async def serve_product():
         product_html = static_path / "product.html"
         if product_html.exists():
             return FileResponse(product_html)
-        elif (static_path / "product" / "index.html").exists():
-            return FileResponse(static_path / "product" / "index.html")
         return FileResponse(static_path / "index.html")
 
-    @app.get("/")
+    @app.api_route("/", methods=["GET", "HEAD"])
     async def serve_root():
         return FileResponse(static_path / "index.html")
 
     app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
-    # client = OpenAI(base_url="https://openrouter.ai/api/v1")
-    #     model="nvidia/nemotron-3-nano-30b-a3b:free",
+    # SPA Fallback Catch-All Handler for Next.js routes
+    @app.exception_handler(404)
+    async def custom_404_handler(request: Request, exc):
+        path = request.url.path
+        if path.startswith("/api"):
+            return JSONResponse({"detail": "Not Found"}, status_code=404)
+        if "product" in path and (static_path / "product.html").exists():
+            return FileResponse(static_path / "product.html")
+        return FileResponse(static_path / "index.html")
