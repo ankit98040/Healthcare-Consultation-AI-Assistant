@@ -30,30 +30,30 @@ export default function Home() {
             </div>
           </div>
 
-          <div>
+          <div className="flex items-center gap-3">
+            <Link 
+              href="/product" 
+              className="bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 text-white font-medium py-2 px-5 rounded-xl transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 text-sm flex items-center gap-2"
+            >
+              <span>Go to App</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+
             <SignedOut>
               <SignInButton mode="modal">
                 <button className="relative group overflow-hidden rounded-xl p-px font-semibold text-sm">
                   <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-emerald-400 rounded-xl group-hover:opacity-90 transition-opacity" />
-                  <span className="relative block px-5 py-2.5 rounded-[11px] bg-[#0f172a] text-white transition-all duration-200 group-hover:bg-transparent">
+                  <span className="relative block px-4 py-2.5 rounded-[11px] bg-[#0f172a] text-white transition-all duration-200 group-hover:bg-transparent">
                     Sign In
                   </span>
                 </button>
               </SignInButton>
             </SignedOut>
+
             <SignedIn>
-              <div className="flex items-center gap-4">
-                <Link 
-                  href="/product" 
-                  className="bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 text-white font-medium py-2 px-5 rounded-xl transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 text-sm flex items-center gap-2"
-                >
-                  <span>Go to App</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </Link>
-                <UserButton showName={true} />
-              </div>
+              <UserButton showName={true} />
             </SignedIn>
           </div>
         </nav>
@@ -80,26 +80,22 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <Link href="/product">
+              <button className="w-full sm:w-auto bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 text-white font-bold py-4 px-8 rounded-2xl text-lg transition-all shadow-xl shadow-blue-600/30 hover:shadow-blue-600/50 hover:scale-105 flex items-center justify-center gap-3">
+                <span>Open Consultation Assistant</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
+            </Link>
+
             <SignedOut>
               <SignInButton mode="modal">
-                <button className="w-full sm:w-auto bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 text-white font-bold py-4 px-8 rounded-2xl text-lg transition-all shadow-xl shadow-blue-600/30 hover:shadow-blue-600/50 hover:scale-105 flex items-center justify-center gap-3">
-                  <span>Start Free Clinical Trial</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                <button className="w-full sm:w-auto bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 text-white font-semibold py-4 px-6 rounded-2xl text-lg transition-all flex items-center justify-center gap-2">
+                  <span>Sign In to Account</span>
                 </button>
               </SignInButton>
             </SignedOut>
-            <SignedIn>
-              <Link href="/product">
-                <button className="w-full sm:w-auto bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 text-white font-bold py-4 px-8 rounded-2xl text-lg transition-all shadow-xl shadow-blue-600/30 hover:shadow-blue-600/50 hover:scale-105 flex items-center justify-center gap-3">
-                  <span>Open Consultation Assistant</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </button>
-              </Link>
-            </SignedIn>
           </div>
 
           {/* Quick Metrics */}
