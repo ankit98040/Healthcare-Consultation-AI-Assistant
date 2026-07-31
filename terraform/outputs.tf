@@ -8,7 +8,7 @@ data "external" "ecs_public_ip" {
       fi
     fi
     if [ -z "$PUBLIC_IP" ] || [ "$PUBLIC_IP" == "None" ]; then
-      PUBLIC_IP="13.222.7.60"
+      PUBLIC_IP="PENDING_TASK_IP"
     fi
     jq -n --arg url "http://$PUBLIC_IP:${var.container_port}" '{"url":$url}'
 EOF
