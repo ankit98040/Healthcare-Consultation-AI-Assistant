@@ -3,3 +3,5 @@ uvicorn
 openai
 fastapi-clerk-auth
 pydantic
+python-dotenv
+boto3

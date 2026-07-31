@@ -86,13 +86,15 @@ function ConsultationForm() {
                 },
                 onerror(err) {
                     console.error('SSE error:', err);
+                    setOutput((prev) => prev || `Error: Failed to stream summary from backend. Please check server logs and API keys.`);
                     controller.abort();
                     setLoading(false);
+                    throw err;
                 },
             });
         } catch (err: any) {
             console.error('Submit error:', err);
-            setOutput('An error occurred while generating the summary. Please try again.');
+            setOutput((prev) => prev || 'An error occurred while generating the summary. Please check authentication and network connectivity.');
             setLoading(false);
         }
     }
