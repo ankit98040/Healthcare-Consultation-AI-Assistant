@@ -63,10 +63,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Force new deployment on ECS Cluster
-        run: |
-          aws ecs update-service \
-            --cluster ${{ env.ECS_CLUSTER }} \
-            --service ${{ env.ECS_SERVICE }} \
-            --force-new-deployment \
-            --region ${{ env.AWS_REGION }}
+      # - name: Force new deployment on ECS Cluster
+      #   run: |
+      #     aws ecs update-service \
+      #       --cluster ${{ env.ECS_CLUSTER }} \
+      #       --service ${{ env.ECS_SERVICE }} \
+      #       --force-new-deployment \
+      #       --region ${{ env.AWS_REGION }}
