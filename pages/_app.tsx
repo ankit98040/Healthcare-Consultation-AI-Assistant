@@ -4,8 +4,8 @@ import Head from 'next/head';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/globals.css';
 
-// Fallback dummy key to prevent static pre-rendering failures during build if ENV is missing
-const CLERK_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_Y2xlcmsuZXhhbXBsZS5jb20k";
+// Production Clerk Publishable Key (fallback to real key if build ARG is omitted)
+const CLERK_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_YWRqdXN0ZWQtYm9hLTk2LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
