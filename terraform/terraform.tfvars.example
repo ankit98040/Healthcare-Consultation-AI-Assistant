@@ -1,0 +1,14 @@
+# Example terraform.tfvars file
+# Replace placeholder values with your actual secret credentials.
+# DO NOT commit the populated terraform.tfvars file to version control.
+
+aws_region      = "us-east-1"
+environment     = "production"
+app_name        = "consultation-app"
+ecr_image_url   = "191990713407.dkr.ecr.us-east-1.amazonaws.com/consultation-app:latest"
+container_port  = 8000
+
+# Secrets Manager Credentials
+clerk_secret_key = "sk_test_YOUR_CLERK_SECRET_KEY"
+clerk_jwks_url   = "https://adjusted-boa-96.clerk.accounts.dev/.well-known/jwks.json"
+openai_api_key   = "sk-or-v1-YOUR_OPENAI_OR_OPENROUTER_API_KEY"
