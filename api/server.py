@@ -8,39 +8,6 @@ from pydantic import BaseModel
 from fastapi_clerk_auth import ClerkConfig, ClerkHTTPBearer, HTTPAuthorizationCredentials
 from openai import OpenAI
 
-# Load local environment variables from .env or .env.local if running locally
-try:
-    from dotenv import load_dotenv
-    load_dotenv(".env.local")
-    load_dotenv(".env")
-except ImportError:
-    pass
-
-def get_secret(key: str, default: str = "") -> str:
-    """
-    Retrieves secret value:
-    1. From environment variables (automatically injected by AWS ECS Secrets Manager on Fargate)
-    2. Fallback to querying AWS Secrets Manager directly via boto3 if deployed on AWS
-    3. Default value
-    """
-    val = os.getenv(key)
-    if val:
-        return val
-
-    # Fallback to direct AWS Secrets Manager fetch if running in AWS environment
-    try:
-        import boto3
-        region = os.getenv("AWS_REGION", os.getenv("DEFAULT_AWS_REGION", "us-east-1"))
-        client = boto3.client("secretsmanager", region_name=region)
-        secret_name = f"consultation-app-{key.lower().replace('_', '-')}"
-        res = client.get_secret_value(SecretId=secret_name)
-        if "SecretString" in res:
-            return res["SecretString"]
-    except Exception as e:
-        pass
-
-    return default
-
 app = FastAPI()
 
 # Add CORS middleware (allows frontend to call backend)
@@ -52,8 +19,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Clerk authentication setup (retrieves JWKS URL from env or AWS Secrets Manager)
-jwks_url = get_secret("CLERK_JWKS_URL", "https://adjusted-boa-96.clerk.accounts.dev/.well-known/jwks.json")
+# Clerk authentication setup
+jwks_url = os.getenv("CLERK_JWKS_URL", "https://adjusted-boa-96.clerk.accounts.dev/.well-known/jwks.json")
 clerk_config = ClerkConfig(jwks_url=jwks_url)
 clerk_guard = ClerkHTTPBearer(clerk_config)
 
@@ -86,9 +53,7 @@ def consultation_summary(
     creds: HTTPAuthorizationCredentials = Depends(clerk_guard),
 ):
     user_id = creds.decoded.get("sub", "user")
-    
-    # Retrieve OpenAI API Key from AWS Secrets Manager (on ECS) or local .env
-    api_key = get_secret("OPENAI_API_KEY") or get_secret("OPENROUTER_API_KEY") or "sk-or-v1-placeholder"
+    api_key = os.getenv("OPENAI_API_KEY", "") or os.getenv("OPENROUTER_API_KEY", "") or "sk-or-v1-placeholder"
 
     client = OpenAI(
         base_url="https://openrouter.ai/api/v1",
@@ -163,3 +128,6 @@ if static_path.exists():
         return FileResponse(static_path / "index.html")
 
     app.mount("/", StaticFiles(directory="static", html=True), name="static")
+
+    # client = OpenAI(base_url="https://openrouter.ai/api/v1")
+    #     model="nvidia/nemotron-3-nano-30b-a3b:free",
