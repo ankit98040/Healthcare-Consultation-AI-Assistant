@@ -11,21 +11,21 @@ import { fetchEventSource } from '@microsoft/fetch-event-source';
 import Link from 'next/link';
 
 const SAMPLE_NOTES = [
-  {
-    title: "Cardiology Follow-up",
-    patientName: "Sarah Jenkins",
-    notes: "Patient reports mild chest tightness after climbing 2 flights of stairs. BP 138/88, HR 74 bpm. Currently on Lisinopril 10mg daily. Compliant with diet, reduced sodium intake. Ordered EKG and lipid panel. Advised to log daily morning blood pressure readings. Follow up in 4 weeks."
-  },
-  {
-    title: "Respiratory Assessment",
-    patientName: "Robert Chen",
-    notes: "54 yo male presented with persistent dry cough and low-grade fever for 3 days. Chest X-ray clear. Lungs reveal mild bilateral wheezing. Oxygen saturation 97% on room air. Prescribed Albuterol inhaler PRN and short course of Oral Prednisone. Drink plenty of warm fluids and rest. Contact clinic if fever exceeds 102°F or dyspnea worsens."
-  },
-  {
-    title: "Routine Pediatric Checkup",
-    patientName: "Liam Davis (8 y/o)",
-    notes: "Annual wellness checkup. Growth percentiles stable (65th percentile height, 50th percentile weight). Immunizations up to date (MMR booster administered today). Parents report good sleep and diet. Recommended 60 mins daily physical activity and annual dental cleaning."
-  }
+    {
+        title: "Cardiology Follow-up",
+        patientName: "Sarah Jenkins",
+        notes: "Patient reports mild chest tightness after climbing 2 flights of stairs. BP 138/88, HR 74 bpm. Currently on Lisinopril 10mg daily. Compliant with diet, reduced sodium intake. Ordered EKG and lipid panel. Advised to log daily morning blood pressure readings. Follow up in 4 weeks."
+    },
+    {
+        title: "Respiratory Assessment",
+        patientName: "Robert Chen",
+        notes: "54 yo male presented with persistent dry cough and low-grade fever for 3 days. Chest X-ray clear. Lungs reveal mild bilateral wheezing. Oxygen saturation 97% on room air. Prescribed Albuterol inhaler PRN and short course of Oral Prednisone. Drink plenty of warm fluids and rest. Contact clinic if fever exceeds 102°F or dyspnea worsens."
+    },
+    {
+        title: "Routine Pediatric Checkup",
+        patientName: "Liam Davis (8 y/o)",
+        notes: "Annual wellness checkup. Growth percentiles stable (65th percentile height, 50th percentile weight). Immunizations up to date (MMR booster administered today). Parents report good sleep and diet. Recommended 60 mins daily physical activity and annual dental cleaning."
+    }
 ];
 
 function ConsultationForm() {
@@ -65,7 +65,7 @@ function ConsultationForm() {
             const controller = new AbortController();
             let buffer = '';
 
-            await fetchEventSource('/api', {
+            await fetchEventSource('/api/consultation', {
                 signal: controller.signal,
                 method: 'POST',
                 headers: {
@@ -81,8 +81,8 @@ function ConsultationForm() {
                     buffer += ev.data;
                     setOutput(buffer);
                 },
-                onclose() { 
-                    setLoading(false); 
+                onclose() {
+                    setLoading(false);
                 },
                 onerror(err) {
                     console.error('SSE error:', err);
@@ -210,8 +210,8 @@ function ConsultationForm() {
                             />
                         </div>
 
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             disabled={loading || !notes.trim()}
                             className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 disabled:opacity-50 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
                         >
