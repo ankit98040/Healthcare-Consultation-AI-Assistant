@@ -9,9 +9,7 @@ terraform {
 }
 
 provider "aws" {
-  region                   = var.aws_region
-  shared_credentials_files = ["~/.aws/credentials"]
-  shared_config_files      = ["~/.aws/config"]
+  region = var.aws_region
 
   default_tags {
     tags = {

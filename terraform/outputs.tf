@@ -1,6 +1,5 @@
 data "external" "ecs_public_ip" {
   program = ["bash", "-c", <<EOF
-    eval $(aws configure export-credentials --format env 2>/dev/null)
     TASK_ARN=$(aws ecs list-tasks --cluster ${aws_ecs_cluster.main.name} --region ${var.aws_region} --query "taskArns[0]" --output text 2>/dev/null)
     if [ "$TASK_ARN" != "None" ] && [ -n "$TASK_ARN" ]; then
       ENI_ID=$(aws ecs describe-tasks --cluster ${aws_ecs_cluster.main.name} --tasks $TASK_ARN --region ${var.aws_region} --query "tasks[0].attachments[0].details[?name=='networkInterfaceId'].value" --output text 2>/dev/null)

@@ -10,6 +10,16 @@ data "aws_subnets" "default" {
   }
 }
 
+# --- ECR Data Source (Dynamically fetches the latest image digest from ECR) ---
+data "aws_ecr_repository" "app" {
+  name = var.app_name
+}
+
+data "aws_ecr_image" "latest" {
+  repository_name = data.aws_ecr_repository.app.name
+  image_tag       = "latest"
+}
+
 # --- CloudWatch Log Group ---
 resource "aws_cloudwatch_log_group" "ecs_logs" {
   name              = "/ecs/${var.app_name}"
@@ -72,8 +82,9 @@ resource "aws_ecs_task_definition" "app" {
 
   container_definitions = jsonencode([
     {
-      name      = "consultation-app"
-      image     = var.ecr_image_url
+      name  = "consultation-app"
+      # Dynamically references the latest image digest in ECR on every terraform apply
+      image = "${data.aws_ecr_repository.app.repository_url}@${data.aws_ecr_image.latest.image_digest}"
       essential = true
 
       portMappings = [
