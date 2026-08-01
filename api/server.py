@@ -1,11 +1,18 @@
 import os
 from pathlib import Path
+# pyrefly: ignore [missing-import]
 from fastapi import FastAPI, Depends, Request
+# pyrefly: ignore [missing-import]
 from fastapi.responses import StreamingResponse, FileResponse, JSONResponse
+# pyrefly: ignore [missing-import]
 from fastapi.staticfiles import StaticFiles
+# pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
+# pyrefly: ignore [missing-import]
 from pydantic import BaseModel
+# pyrefly: ignore [missing-import]
 from fastapi_clerk_auth import ClerkConfig, ClerkHTTPBearer, HTTPAuthorizationCredentials
+# pyrefly: ignore [missing-import]
 from openai import OpenAI
 
 app = FastAPI()
